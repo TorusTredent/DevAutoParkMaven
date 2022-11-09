@@ -2,7 +2,8 @@ package by.incubator.service;
 
 import by.incubator.entity.Fixer;
 import by.incubator.entity.vehicle.Vehicle;
-import by.incubator.utils.MyFileReader;
+import by.incubator.infrastructure.core.annotations.Autowired;
+import by.incubator.parser.ParserBreakingsFromFile;
 import by.incubator.utils.MyFileWriter;
 import by.incubator.utils.Randomizer;
 
@@ -12,12 +13,37 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static by.incubator.utils.MyFileWriter.writeListToFile;
+
 public class MechanicService implements Fixer {
 
     private static final String[] DETAILS = {"Фильтр", "Втулка", "Вал", "Ось", "Свеча", "Масло", "ГРМ", "ШРУС"};
     private static final int MAX_NUMBER_OF_BROKEN_DETAILS = 8;
     private static final int MAX_NUMBER_OF_BREAKS = 4;
     private static final String ORDERS_FILE_NAME = "src/main/resources/orders.csv";
+    List<String> orders;
+
+    @Autowired
+    private ParserBreakingsFromFile ordersParser;
+
+    public MechanicService() {
+    }
+
+    public ParserBreakingsFromFile getOrdersParser() {
+        return ordersParser;
+    }
+
+    public void setOrdersParser(ParserBreakingsFromFile ordersParser) {
+        this.ordersParser = ordersParser;
+    }
+
+    public List<String> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<String> orders) {
+        this.orders = orders;
+    }
 
     @Override
     public Map<String, Integer> detectBreaking(Vehicle vehicle) {
@@ -32,10 +58,10 @@ public class MechanicService implements Fixer {
 
     @Override
     public boolean repair(Vehicle vehicle) {
-        List<String> list = MyFileReader.readInfo(ORDERS_FILE_NAME);
+        orders = ordersParser.getOrders();
         String regex = vehicle.getId() + ".*";
-        list.removeIf(i -> i.matches(regex));
-        MyFileWriter.writeListToFile(list, ORDERS_FILE_NAME);
+        orders.removeIf(i -> i.matches(regex));
+        writeListToFile(orders, ORDERS_FILE_NAME);
         return true;
     }
 
@@ -44,7 +70,7 @@ public class MechanicService implements Fixer {
         return getLineFromOrderFile(vehicle) != null;
     }
 
-    public static int getSumNumberOfBreaks(Vehicle vehicle) {
+    public int getSumNumberOfBreaks(Vehicle vehicle) {
         int sum = 0;
         Pattern pattern = Pattern.compile("\\s\\d");
         Matcher matcher = pattern.matcher(getLineFromOrderFile(vehicle));
@@ -55,17 +81,17 @@ public class MechanicService implements Fixer {
     }
 
 
-    private static String getLineFromOrderFile(Vehicle vehicle) {
-        List<String> list = MyFileReader.readInfo(ORDERS_FILE_NAME);
+    private String getLineFromOrderFile(Vehicle vehicle) {
+        orders = ordersParser.getOrders();
         String regex = vehicle.getId() + ".*";
 
-        return list.stream()
+        return orders.stream()
                 .filter(x -> x.matches(regex))
                 .findFirst().orElse(null);
     }
 
     private void setMapOfBrokenDetails(Map<String, Integer> map) {
-        while(true) {
+        while (true) {
             String randomStringFromArray = Randomizer.getRandomStringFromArray(DETAILS);
             int numberOfBreaks = Randomizer.getRandomNumber(MAX_NUMBER_OF_BREAKS);
             Integer value = map.get(randomStringFromArray);
