@@ -1,5 +1,10 @@
 package autopark.entity.engine;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public abstract class AbstractEngine implements Startable {
 
     private String nameEngineType;
@@ -7,22 +12,6 @@ public abstract class AbstractEngine implements Startable {
 
     public AbstractEngine(String nameEngineType, double taxCoefficient) {
         this.nameEngineType = nameEngineType;
-        this.taxCoefficient = taxCoefficient;
-    }
-
-    public String getNameEngineType() {
-        return nameEngineType;
-    }
-
-    public void setNameEngineType(String nameEngineType) {
-        this.nameEngineType = nameEngineType;
-    }
-
-    public double getTaxCoefficient() {
-        return taxCoefficient;
-    }
-
-    public void setTaxCoefficient(double taxCoefficient) {
         this.taxCoefficient = taxCoefficient;
     }
 

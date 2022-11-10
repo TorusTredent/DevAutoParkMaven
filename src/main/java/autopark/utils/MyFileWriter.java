@@ -1,7 +1,7 @@
 package autopark.utils;
 
 import autopark.console.Writer;
-import autopark.entity.vehicle.Vehicle;
+import autopark.entity.Vehicles;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -13,8 +13,8 @@ import java.util.Map;
 
 public class MyFileWriter {
 
-    public static void printToFile(String fileName, Vehicle vehicle, Map<String, Integer> map) {
-        String line = wrapInLine(vehicle, map);
+    public static void printToFile(String fileName, Vehicles vehicles, Map<String, Integer> map) {
+        String line = wrapInLine(vehicles, map);
         try {
             Files.write(Paths.get(fileName), line.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -31,8 +31,8 @@ public class MyFileWriter {
     }
 
 
-    private static String wrapInLine(Vehicle vehicle, Map<String, Integer> map) {
-        String line = String.valueOf(vehicle.getId());
+    private static String wrapInLine(Vehicles vehicles, Map<String, Integer> map) {
+        String line = String.valueOf(vehicles.getId());
         for (Map.Entry<String, Integer> entry: map.entrySet()) {
             line = line + ", " + entry.getKey() + ", " + entry.getValue();
         }

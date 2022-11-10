@@ -21,7 +21,7 @@ public class EntityManagerImpl implements EntityManager {
     private PostgresDataBase dataBaseService;
 
     @Autowired
-    Context context;
+    private Context context;
 
     public EntityManagerImpl() {
     }
