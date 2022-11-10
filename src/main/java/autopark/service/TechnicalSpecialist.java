@@ -4,7 +4,6 @@ import autopark.entity.Types;
 import autopark.entity.engine.DieselEngine;
 import autopark.entity.engine.ElectricalEngine;
 import autopark.entity.engine.GasolineEngine;
-import autopark.entity.vehicle.VehicleType;
 
 public class TechnicalSpecialist {
 

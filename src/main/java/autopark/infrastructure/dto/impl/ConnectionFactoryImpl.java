@@ -4,6 +4,7 @@ import autopark.infrastructure.core.annotations.InitMethod;
 import autopark.infrastructure.core.annotations.Property;
 import autopark.infrastructure.dto.ConnectionFactory;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
@@ -12,6 +13,7 @@ import java.sql.DriverManager;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ConnectionFactoryImpl implements ConnectionFactory {
 
     @Property("url")
@@ -22,9 +24,6 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
     private String password;
 
     private Connection connection;
-
-    public ConnectionFactoryImpl() {
-    }
 
     @SneakyThrows
     @InitMethod

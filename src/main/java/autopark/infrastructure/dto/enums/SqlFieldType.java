@@ -13,7 +13,7 @@ public enum SqlFieldType {
     LONG(Long.class, "integer", "%s"),
     DOUBLE(Double.class, "decimal", "%s"),
     STRING(String.class, "varchar(255)", "'%s'"),
-    DATE(Date.class, "date)", "'%s'");
+    DATE(Date.class, "date", "'%s'");
 
     private final Class<?> type;
     private final String sqlType;

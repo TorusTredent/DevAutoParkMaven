@@ -10,6 +10,8 @@ import autopark.infrastructure.dto.annotations.Column;
 import autopark.infrastructure.dto.annotations.ID;
 import autopark.infrastructure.dto.annotations.Table;
 import autopark.infrastructure.dto.enums.SqlFieldType;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
@@ -24,6 +26,8 @@ import java.util.*;
 import static autopark.console.Writer.printError;
 import static autopark.infrastructure.configurators.impl.Validator.getSetterFieldName;
 
+@Getter
+@Setter
 public class PostgresDataBase {
 
     @Autowired
