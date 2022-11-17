@@ -17,8 +17,10 @@ public class EntityManagerImpl implements EntityManager {
 
     @Autowired
     private ConnectionFactory connection;
+
     @Autowired
     private PostgresDataBase dataBaseService;
+
 
     @Autowired
     private Context context;

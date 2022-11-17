@@ -7,8 +7,11 @@ import java.util.Map;
 public interface Fixer {
 
     Map<String, Integer> detectBreaking(Vehicles vehicles);
+
     void repair(Vehicles vehicles);
+
     boolean isBroken(Vehicles vehicles);
+
     default boolean detectAndRepair(Vehicles vehicles) {
         detectBreaking(vehicles);
         if (isBroken(vehicles)) {

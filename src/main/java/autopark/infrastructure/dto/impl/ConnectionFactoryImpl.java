@@ -18,8 +18,10 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
 
     @Property("url")
     private String url;
+
     @Property("username")
     private String username;
+
     @Property("password")
     private String password;
 

@@ -63,6 +63,7 @@ public class Vehicles implements Comparable<Vehicles> {
 
     @Column(name = "engineCapacity", nullable = false)
     private Double engineCapacity;
+
     private Startable startable;
     private Map<Long, Types> typeIdToType;
 
