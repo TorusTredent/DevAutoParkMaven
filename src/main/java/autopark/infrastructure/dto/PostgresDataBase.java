@@ -153,20 +153,22 @@ public class PostgresDataBase {
 
     @SneakyThrows
     private void invokeSetterMethodByFieldType(Method setterMethod, Field field, Object o, ResultSet rs) {
-        if (field.getType() == Integer.class) {
-            setterMethod.invoke(o, rs.getInt(field.getName()));
-        }
-        if (field.getType() == Long.class) {
-            setterMethod.invoke(o, rs.getLong(field.getName()));
-        }
-        if (field.getType() == Double.class) {
-            setterMethod.invoke(o, rs.getDouble(field.getName()));
-        }
-        if (field.getType() == String.class) {
-            setterMethod.invoke(o, rs.getString(field.getName()));
-        }
-        if (field.getType() == Date.class) {
-            setterMethod.invoke(o, rs.getDate(field.getName()));
+        switch(field.getType().toString()) {
+            case "class java.lang.Integer" : {
+                setterMethod.invoke(o, rs.getInt(field.getName()));
+            }
+            case "class java.lang.Long" : {
+                setterMethod.invoke(o, rs.getLong(field.getName()));
+            }
+            case "class java.lang.Double" : {
+                setterMethod.invoke(o, rs.getDouble(field.getName()));
+            }
+            case "class java.lang.String" : {
+                setterMethod.invoke(o, rs.getString(field.getName()));
+            }
+            case "class java.util.Date" : {
+                setterMethod.invoke(o, rs.getDate(field.getName()));
+            }
         }
     }
 
