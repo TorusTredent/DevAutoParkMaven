@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -40,5 +41,26 @@ public class Workroom {
         for (Vehicles vehicle : notBrokenVehicles) {
             Writer.print(vehicle.getModelName());
         }
+    }
+
+    public List<Vehicles> getRepairedVehicles(List<Vehicles> vehicles) {
+        List<Vehicles> repVehicles = new ArrayList<>();
+
+        vehicles.forEach(vehicle -> {
+            fixer.detectBreaking(vehicle);
+            if (fixer.isBroken(vehicle)) {
+                repVehicles.add(vehicle);
+                fixer.repair(vehicle);
+            }
+        });
+        return repVehicles;
+    }
+
+
+    public List<Long> getRepairedVehiclesIds(List<Vehicles> vehicles) {
+        List<Vehicles> repVEhicles = getRepairedVehicles(vehicles);
+        return repVEhicles.stream()
+                .map(Vehicles::getId)
+                .collect(Collectors.toList());
     }
 }
