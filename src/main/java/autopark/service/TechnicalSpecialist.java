@@ -1,10 +1,9 @@
-package autopark.entity;
+package autopark.service;
 
+import autopark.entity.Types;
 import autopark.entity.engine.DieselEngine;
-import autopark.entity.engine.ElectricEngine;
+import autopark.entity.engine.ElectricalEngine;
 import autopark.entity.engine.GasolineEngine;
-import autopark.entity.enums.Color;
-import autopark.entity.vehicle.VehicleType;
 
 public class TechnicalSpecialist {
 
@@ -21,17 +20,17 @@ public class TechnicalSpecialist {
         return mileage >= 0;
     }
 
-    public static boolean validateWeight(int weight) {
+    public static boolean validateWeight(double weight) {
         return weight >= 0;
     }
 
-    public static boolean validateColor(Color color) {
+    public static boolean validateColor(String color) {
         return color != null;
     }
 
-    public static boolean validateVehicleType(VehicleType type) {
+    public static boolean validateVehicleType(Types type) {
         return (type!= null && !type.getName().isEmpty() &&
-                type.getName() != null && type.getRoadTaxCoefficient() >= 0);
+                type.getName() != null && type.getCoefTaxes() >= 0);
     }
 
     public static boolean validateRegistrationNumber(String number) {
@@ -52,7 +51,23 @@ public class TechnicalSpecialist {
                 dieselEngine.getFuelConsumptionPer100() >= 0 && dieselEngine.getFuelTankCapacity() >= 0);
     }
 
-    public static boolean validationElectricalEngine(ElectricEngine electricEngine) {
-        return (electricEngine.getBatterySize() >= 0 && electricEngine.getElectricityConsumption() >= 0);
+    public static boolean validationElectricalEngine(ElectricalEngine electricalEngine) {
+        return (electricalEngine.getBatterySize() >= 0 && electricalEngine.getElectricityConsumption() >= 0);
+    }
+
+    public static boolean validateCoefTaxes(Double coefTaxes) {
+        return coefTaxes >= 0;
+    }
+
+    public static boolean validateTypeName(String name) {
+        return name != null && !name.isEmpty();
+    }
+
+    public static boolean validateCost(Double cost) {
+        return cost >= 0;
+    }
+
+    public static boolean validateEngineName(String engineName) {
+        return "Diesel".equals(engineName) || "Electrical".equals(engineName) || "Gasoline".equals(engineName);
     }
 }

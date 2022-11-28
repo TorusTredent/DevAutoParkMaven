@@ -1,10 +1,10 @@
 package autopark.sorter;
 
-import autopark.entity.vehicle.Vehicle;
+import autopark.entity.Vehicles;
 
 public class Sorter {
     
-    public void sortingVehicles(Vehicle[] vehicles) {
+    public void sortingVehicles(Vehicles[] vehicles) {
         for (int i = 0; i < vehicles.length; i++) {
             int minVehicleIndex = i;
             for (int j = i; j < vehicles.length; j++) {
@@ -17,8 +17,8 @@ public class Sorter {
     }
 
 
-    private void swap(Vehicle[] vehicles, int i, int minVehicleIndex) {
-        Vehicle temp = vehicles[i];
+    private void swap(Vehicles[] vehicles, int i, int minVehicleIndex) {
+        Vehicles temp = vehicles[i];
         vehicles[i] = vehicles[minVehicleIndex];
         vehicles[minVehicleIndex] = temp;
     }

@@ -1,27 +1,37 @@
 package autopark;
 
-import autopark.infrastructure.core.impl.ApplicationContext;
-import autopark.service.BadMechanicService;
-import autopark.service.Workroom;
 import autopark.collection.VehicleCollection;
-import autopark.entity.Fixer;
-import autopark.entity.vehicle.Vehicle;
+import autopark.infrastructure.core.impl.ApplicationContext;
+import autopark.service.Fixer;
+import autopark.service.MechanicService;
+import autopark.service.Workroom;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import static autopark.console.Writer.print;
 
 public class Main {
 
     public static void main(String[] args) {
         Map<Class<?>, Class<?>> interfaceToImplementation = new HashMap<>();
-        interfaceToImplementation.put(Fixer.class, BadMechanicService.class);
+        interfaceToImplementation.put(Fixer.class, MechanicService.class);
         ApplicationContext applicationContext = new ApplicationContext("autopark", interfaceToImplementation);
 
         VehicleCollection vehicleCollection = applicationContext.getObject(VehicleCollection.class);
-        Workroom workroom = applicationContext.getObject(Workroom.class);
+        printAllListInVehicleColl(vehicleCollection);
 
-        List<Vehicle> vehicleList = vehicleCollection.getVehicleList();
-        workroom.checkAllVehicle(vehicleList);
+        Workroom workroom = applicationContext.getObject(Workroom.class);
+        workroom.checkAllVehicle(vehicleCollection.getVehiclesList());
+    }
+
+
+    private static void printAllListInVehicleColl(VehicleCollection vehicleCollection) {
+        print(vehicleCollection.getVehiclesList());
+        print(vehicleCollection.getRentsList());
+        print(vehicleCollection.getTypesList());
     }
 }
