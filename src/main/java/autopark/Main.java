@@ -4,15 +4,14 @@ import autopark.collection.VehicleCollection;
 import autopark.infrastructure.core.impl.ApplicationContext;
 import autopark.service.Fixer;
 import autopark.service.MechanicService;
+import autopark.service.ScheduleService;
 import autopark.service.Workroom;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static autopark.console.Writer.print;
+import static autopark.console.Writer.printError;
 
 public class Main {
 
@@ -25,7 +24,16 @@ public class Main {
         printAllListInVehicleColl(vehicleCollection);
 
         Workroom workroom = applicationContext.getObject(Workroom.class);
-        workroom.checkAllVehicle(vehicleCollection.getVehiclesList());
+
+        ScheduleService scheduleService = applicationContext.getObject(ScheduleService.class);
+
+        scheduleService.checkIsBrokenVehicle(workroom, vehicleCollection);
+
+        try {
+            Thread.sleep(666000);
+        } catch (InterruptedException e) {
+            printError(e.getMessage());
+        }
     }
 
 
